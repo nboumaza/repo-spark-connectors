@@ -7,15 +7,20 @@
 
   <!--- *****************************  properties ***************************** -->
   <properties>
-    <scala.version>2.11.7</scala.version>
+    <scala.version>2.11.8</scala.version>
+      <scalaz.version>7.2.8</scalaz.version>
+    <http4s.version>0.14.11</http4s.version>
+      <argonaut.version>6.1</argonaut.version>
     <mongo.spark.version>2.0.0</mongo.spark.version>
     <spark.module.version>2.0.0</spark.module.version>
     <spark.scala.version>2.11</spark.scala.version>
+
   </properties>
 
   <!--- *****************************  dependencies ***************************** -->
   <dependencies>
 
+      <!--mongosb native connector -->
     <dependency>
       <groupId>org.mongodb.spark</groupId>
       <artifactId>mongo-spark-connector_${spark.scala.version}</artifactId>
@@ -29,14 +34,12 @@
       <version>${spark.module.version}</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-sql_${spark.scala.version}</artifactId>
       <version>${spark.module.version}</version>
       <scope>provided</scope>
     </dependency>
-
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-streaming_2.11</artifactId>
@@ -51,54 +54,42 @@
       <version>${scala.version}</version>
     </dependency>
 
+    <!-- scalaz -->
+      <dependency>
+          <groupId>org.scalaz</groupId>
+          <artifactId>scalaz-core_2.11</artifactId>
+          <version>${scalaz.version}</version>
+      </dependency>
+      <dependency>
+          <groupId>org.scalaz</groupId>
+          <artifactId>scalaz-concurrent_2.11</artifactId>
+          <version>${scalaz.version}</version>
+      </dependency>
 
-    <!-- json -->
-    <!-- https://mvnrepository.com/artifact/io.argonaut/argonaut_2.11 -->
+      <!-- argonaut -->
     <dependency>
       <groupId>io.argonaut</groupId>
       <artifactId>argonaut_2.11</artifactId>
-      <version>6.1</version>
+      <version>${argonaut.version}</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/com.github.alexarchambault/argonaut-shapeless_6.2_2.12 -->
-    <dependency>
-      <groupId>com.github.alexarchambault</groupId>
-      <artifactId>argonaut-shapeless_6.2_2.12</artifactId>
-      <version>1.2.0-M4</version>
-    </dependency>
+      <dependency>
+          <groupId>org.http4s</groupId>
+          <artifactId>http4s-argonaut_2.11</artifactId>
+          <version>${http4s.version}</version>
+      </dependency>
 
-
-    <!-- https://mvnrepository.com/artifact/org.http4s/http4s-argonaut_2.11 -->
-    <dependency>
-      <groupId>org.http4s</groupId>
-      <artifactId>http4s-argonaut_2.11</artifactId>
-      <version>0.14.11</version>
-    </dependency>
-
-
-    <!-- REST client -->
+    <!-- http4s + blaze -->
+      <dependency>
+          <groupId>org.http4s</groupId>
+          <artifactId>http4s-core_2.11</artifactId>
+          <version>${http4s.version}</version>
+      </dependency>
     <dependency>
       <groupId>org.http4s</groupId>
       <artifactId>http4s-blaze-client_2.11</artifactId>
-      <version>0.14.11</version>
+      <version>${http4s.version}</version>
     </dependency>
 
-    <!-- REMOVE Test Server-->
-    <dependency>
-      <groupId>org.http4s</groupId>
-      <artifactId>http4s-blaze-server_2.11</artifactId>
-      <version>0.14.11</version>
-    </dependency>
-    <dependency>
-      <groupId>org.http4s</groupId>
-      <artifactId>http4s-server_2.11</artifactId>
-      <version>0.14.11</version>
-    </dependency>
-    <dependency>
-      <groupId>org.http4s</groupId>
-      <artifactId>http4s-dsl_2.11</artifactId>
-      <version>0.14.11</version>
-    </dependency>
-    <!-- REMOVE Test Server-->
 
     <!-- test -->
     <dependency>
@@ -181,15 +172,5 @@
       </plugin>
     </plugins>
   </reporting>
-
-  <repositories>
-      <repository>
-        <id>central</id>
-        <url>https://repo1.maven.org/maven2</url>
-        <releases>
-          <enabled>true</enabled>
-        </releases>
-      </repository>
-  </repositories>
 
 </project>

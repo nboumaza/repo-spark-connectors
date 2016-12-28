@@ -4,7 +4,7 @@ package com.c12e.repos.spark.common.config
   *
   * @param repoId the repository Id
   * @param apiKey    the apiKey
-  * @param collection  the collection to load/save  from/to
+  * @param collection  the collection to load/save from/to
   */
 final case class RepoConfig(
   repoId: String,
