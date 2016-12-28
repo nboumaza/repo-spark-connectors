@@ -1,0 +1,40 @@
+@startuml
+
+abstract class AbstractDataSource
+
+
+interface DataSourceRegister
+interface RelationProvider
+interface SchemaRelationProvider
+interface CreateRelationProvider{
+BaseRelation createRelation(SQLContext sqlContext, SaveMode mode,scala.collection.immutable.Map<String,String> parameters,Dataset<Row> data)
+}
+
+
+abstract class StructType
+
+abstract class BaseRelation{
+boolean	needConversion()
+StructType	schema()
+long	sizeInBytes()
+SQLContext	sqlContext()
+Filter[]	unhandledFilters(Filter[] filters)
+}
+
+BaseRelation -- CreateRelationProvider : < uses
+
+DataSourceRegister <|-- DataSource
+RelationProvider <|-- DataSource
+SchemaRelationProvider <|-- DataSource
+CreateRelationProvider <|-- DataSource
+
+
+class StructField{
+String name
+DataType dataType
+Boolean nullable
+Metadata metadata
+}
+
+
+@enduml

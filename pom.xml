@@ -1,0 +1,195 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.cogscale</groupId>
+  <artifactId>mongo-connector</artifactId>
+  <version>0.1</version>
+
+  <!--- *****************************  properties ***************************** -->
+  <properties>
+    <scala.version>2.11.7</scala.version>
+    <mongo.spark.version>2.0.0</mongo.spark.version>
+    <spark.module.version>2.0.0</spark.module.version>
+    <spark.scala.version>2.11</spark.scala.version>
+  </properties>
+
+  <!--- *****************************  dependencies ***************************** -->
+  <dependencies>
+
+    <dependency>
+      <groupId>org.mongodb.spark</groupId>
+      <artifactId>mongo-spark-connector_${spark.scala.version}</artifactId>
+      <version>${mongo.spark.version}</version>
+    </dependency>
+
+    <!-- spark -->
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-core_${spark.scala.version}</artifactId>
+      <version>${spark.module.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-sql_${spark.scala.version}</artifactId>
+      <version>${spark.module.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.spark</groupId>
+      <artifactId>spark-streaming_2.11</artifactId>
+      <version>${spark.module.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- scala -->
+    <dependency>
+      <groupId>org.scala-lang</groupId>
+      <artifactId>scala-library</artifactId>
+      <version>${scala.version}</version>
+    </dependency>
+
+
+    <!-- json -->
+    <!-- https://mvnrepository.com/artifact/io.argonaut/argonaut_2.11 -->
+    <dependency>
+      <groupId>io.argonaut</groupId>
+      <artifactId>argonaut_2.11</artifactId>
+      <version>6.1</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.github.alexarchambault/argonaut-shapeless_6.2_2.12 -->
+    <dependency>
+      <groupId>com.github.alexarchambault</groupId>
+      <artifactId>argonaut-shapeless_6.2_2.12</artifactId>
+      <version>1.2.0-M4</version>
+    </dependency>
+
+
+    <!-- https://mvnrepository.com/artifact/org.http4s/http4s-argonaut_2.11 -->
+    <dependency>
+      <groupId>org.http4s</groupId>
+      <artifactId>http4s-argonaut_2.11</artifactId>
+      <version>0.14.11</version>
+    </dependency>
+
+
+    <!-- REST client -->
+    <dependency>
+      <groupId>org.http4s</groupId>
+      <artifactId>http4s-blaze-client_2.11</artifactId>
+      <version>0.14.11</version>
+    </dependency>
+
+    <!-- REMOVE Test Server-->
+    <dependency>
+      <groupId>org.http4s</groupId>
+      <artifactId>http4s-blaze-server_2.11</artifactId>
+      <version>0.14.11</version>
+    </dependency>
+    <dependency>
+      <groupId>org.http4s</groupId>
+      <artifactId>http4s-server_2.11</artifactId>
+      <version>0.14.11</version>
+    </dependency>
+    <dependency>
+      <groupId>org.http4s</groupId>
+      <artifactId>http4s-dsl_2.11</artifactId>
+      <version>0.14.11</version>
+    </dependency>
+    <!-- REMOVE Test Server-->
+
+    <!-- test -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.4</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.specs</groupId>
+      <artifactId>specs</artifactId>
+      <version>1.2.5</version>
+      <scope>test</scope>
+    </dependency>
+
+
+  </dependencies>
+
+  <!--- *****************************  build ***************************** -->
+
+  <build>
+    <sourceDirectory>src/main/scala</sourceDirectory>
+    <testSourceDirectory>src/test/scala</testSourceDirectory>
+
+    <plugins>
+
+      <!-- maven scala plugin -->
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <version>2.15.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <args>
+            <arg>-g:line</arg>
+          </args>
+        </configuration>
+      </plugin>
+      <!-- jared dependencies -->
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.0.0</version>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id> <!-- this is used for inheritance merges -->
+            <phase>package</phase> <!-- bind to the packaging phase -->
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    </plugins>
+
+
+  </build>
+
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.scala-tools</groupId>
+        <artifactId>maven-scala-plugin</artifactId>
+        <configuration>
+          <scalaVersion>${scala.version}</scalaVersion>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>
+
+  <repositories>
+      <repository>
+        <id>central</id>
+        <url>https://repo1.maven.org/maven2</url>
+        <releases>
+          <enabled>true</enabled>
+        </releases>
+      </repository>
+  </repositories>
+
+</project>
