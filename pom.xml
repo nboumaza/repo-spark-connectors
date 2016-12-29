@@ -9,7 +9,7 @@
   <properties>
     <scala.version>2.11.8</scala.version>
       <scalaz.version>7.2.8</scalaz.version>
-    <http4s.version>0.14.11</http4s.version>
+    <http4s.version>0.15.0a</http4s.version>
       <argonaut.version>6.1</argonaut.version>
     <mongo.spark.version>2.0.0</mongo.spark.version>
     <spark.module.version>2.0.0</spark.module.version>
@@ -99,13 +99,25 @@
       <scope>test</scope>
     </dependency>
 
+      <dependency>
+          <groupId>org.scalatest</groupId>
+          <artifactId>scalatest_2.11</artifactId>
+          <version>3.0.1</version>
+          <scope>test</scope>
+      </dependency>
+      <dependency>
+          <groupId>org.specs2</groupId>
+          <artifactId>specs2-core_2.11</artifactId>
+          <version>3.8.6</version>
+      </dependency>
+   <!--
     <dependency>
       <groupId>org.specs</groupId>
       <artifactId>specs</artifactId>
       <version>1.2.5</version>
       <scope>test</scope>
     </dependency>
-
+-->
 
   </dependencies>
 
@@ -160,7 +172,7 @@
 
 
   </build>
-
+<!--
   <reporting>
     <plugins>
       <plugin>
@@ -172,5 +184,5 @@
       </plugin>
     </plugins>
   </reporting>
-
+-->
 </project>

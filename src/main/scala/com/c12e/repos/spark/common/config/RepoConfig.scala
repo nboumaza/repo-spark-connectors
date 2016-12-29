@@ -18,21 +18,20 @@ object RepoConfig extends RepoConfigProperty {
   /**
     *
     * @param params parameters {repoId, apiKey, collection }
-    * @return a new instance of a RepoConf if the 3 required parameters have been supplied, NONE otherwise
+    * @return a new instance of a RepoConf if the 3 required parameters are supplied, NONE otherwise
     */
   def fromParams(params: Map[String, String]): Option[RepoConfig] = {
 
     val repoId: Option[String] = params.get(REPOSITORY_ID)
     val apiKey: Option[String] = params.get(API_KEY)
-    val col: Option[String] = params.get(COLLECTION)
+    val collection: Option[String] = params.get(COLLECTION)
 
     val repoConf: Option[RepoConfig] = for {
       r <- repoId
       a <- apiKey
-      c <- col
+      c <- collection
     } yield RepoConfig(r,a,c)
 
     repoConf
-
   }
 }
