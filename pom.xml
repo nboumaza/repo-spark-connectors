@@ -10,7 +10,7 @@
     <scala.version>2.11.8</scala.version>
       <scalaz.version>7.2.8</scalaz.version>
     <http4s.version>0.15.0a</http4s.version>
-      <argonaut.version>6.1</argonaut.version>
+      <argonaut.version>6.2-RC2</argonaut.version>
     <mongo.spark.version>2.0.0</mongo.spark.version>
     <spark.module.version>2.0.0</spark.module.version>
     <spark.scala.version>2.11</spark.scala.version>
