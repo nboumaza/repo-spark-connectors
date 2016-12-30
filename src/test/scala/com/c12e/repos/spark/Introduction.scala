@@ -18,6 +18,12 @@ object Introduction extends TourHelper {
 
     val sc = getSparkContext(args)
 
+    //REMOVE below
+    val conf = sc.getConf.getAll
+    println("Conf params >>>>>>>>>>>>>")
+    conf.foreach(println)
+    //---------
+
     // Saving data from an RDD to MongoDB
     import org.bson.Document
     val documents = sc.parallelize((1 to 10).map(i => Document.parse(s"{field: $i}")))
@@ -25,14 +31,10 @@ object Introduction extends TourHelper {
    // Saving data with a custom WriteConfig
   // import com.mongodb.spark.config._
     val writeConfig = WriteConfig(Map("uri" -> "mongodb://localhost/", "database" -> "test", "collection" -> "spark", "writeConcern.w" -> "majority"), Some(WriteConfig(sc)))
-    //MongoRepo.save(documents, writeConfig )
+    MongoRepo.save(documents, writeConfig )
 
-    val conf = sc.getConf.getAll
 
-    println("Conf params >>>>>>>>>>>>>")
-    conf.foreach(println)
-
-    MongoRepo.save(documents)
+    //MongoRepo.save(documents)
 
 // Saving data with a custom WriteConfig
 /*import com.mongodb.spark.config._

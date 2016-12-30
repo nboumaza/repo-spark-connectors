@@ -109,15 +109,8 @@
           <groupId>org.specs2</groupId>
           <artifactId>specs2-core_2.11</artifactId>
           <version>3.8.6</version>
+          <scope>test</scope>
       </dependency>
-   <!--
-    <dependency>
-      <groupId>org.specs</groupId>
-      <artifactId>specs</artifactId>
-      <version>1.2.5</version>
-      <scope>test</scope>
-    </dependency>
--->
 
   </dependencies>
 
