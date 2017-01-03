@@ -20,8 +20,7 @@ object ClientFault {
   def requestFault(request: Request)(cause: Throwable): ClientFault =
     RequestFault(request, cause)
 
-  def malformedResponse
-  (details: DetailedResponse)(decodeFailure: DecodeFailure): ClientFault =
+  def malformedResponse(details: DetailedResponse)(decodeFailure: DecodeFailure): ClientFault =
     MalformedResponse(details.request, details.response, decodeFailure)
 
   def returnedFault(request: Request, response: Response): ClientFault =

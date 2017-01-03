@@ -94,7 +94,7 @@ object MongoRepo {
   def save[D: ClassTag](rdd: RDD[D]): Unit = {
 
     //TODO insure we transform our input required params into mongo WriteConfig
-    //create a default WriteConf and include and replace with:
+    //get
    // MongoRepo.save(rdd, writeConfig)
     MongoSpark.save(rdd)
   }

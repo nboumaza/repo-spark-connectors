@@ -15,20 +15,23 @@ trait TourHelper {
 
     val conf = new SparkConf()
       .setMaster("local[*]")
-      .setAppName("MongoSparkConnector")
-      .set("spark.app.id", "MongoSparkConnector")
       //.set("spark.repo.input.uri", "mongodb://localhost/zazie.ztune")
       //.set("spark.repo.output.uri", "mongodb://localhost/zazie.ztune")
-      //.set("spark.mongodb.input.uri", "mongodb://localhost/zazie.ztune")
-      //.set("spark.mongodb.output.uri", "mongodb://localhost/zazie.ztune")
-      //.set("api_endpoint", "http//api.foundation.insights.ai/v1")
-      //.set("repo_id", "blabla")
-      //.set("api_key", "4346c61a3d0d476caeb25b412cad4e0c")
-    //api_key=“123456789”, repo_id=“84f8323f8833455”, collection=“people"))
+     // .set("spark.mongodb.input.uri", "mongodb://localhost/zazie.ztune")
+     // .set("spark.mongodb.output.uri", "mongodb://localhost/zazie.ztune")
+     .set("input.repo.id",  "582dc1fe4a8a2e0011880682c")
+     .set("output.repo.id", "582dc1fe4a8a2e0011880682c")
+      .set("api_key", "4346c61a3d0d476caeb25b412cad4e0c")
+      .set("input.collection", "zazie")
+      .set("output.collection", "zazie")  //assumes overwrite
 
-    val sc = new SparkContext(conf)
-   // MongoConnector(sc).withDatabaseDo(WriteConfig(sc), { db => db.drop() })
+      val sc = new SparkContext(conf)
+
+      // MongoConnector(sc).withDatabaseDo(WriteConfig(sc), { db => db.drop() })
+
     sc
   }
+
+  //fetchRepo()
 
 }

@@ -9,13 +9,13 @@ import org.http4s.client.blaze.{BlazeClientConfig, SimpleHttp1Client}
 import org.http4s.util.CaseInsensitiveString
 
 import scala.concurrent.duration._
-import scalaz.{-\/, \/, \/-}
+import scalaz.{-\/, \/-}
 
 object HttpClient {
 
-  type MaybeRepo = \/[ClientFault, Repository]
+  type MaybeRepo =  Either[ClientFault, Repository] // \/[ClientFault, Repository]
 
-  val API_Key: String = "X-CogScale-Key"
+  val API_KEY: String = "X-CogScale-Key"
   val REPO_SERVICE_HOST = "api.foundation.insights.ai"
   val REPO_SERVICE_PORT = 80
   val REPO_ENDPOINT: String = "http://api.foundation.insights.ai/v1/repository/"
@@ -38,7 +38,7 @@ object HttpClient {
     */
   def fetchRepoInfo(repoId: String, apiKey: String): Option[Repository] = {
 
-    def getRepoInfo(repoId: String, apiKey: String):  Either[ClientFault, Repository] = {
+    def getRepoInfo(repoId: String, apiKey: String):  MaybeRepo = {
 
       val uri_ = Uri(path = s"$REPO_ENDPOINT$repoId/$CON_INFO",
         authority = Some(Authority(host = RegName(REPO_SERVICE_HOST),
@@ -47,7 +47,7 @@ object HttpClient {
       val request = Request(
         method = Method.GET,
         uri = uri_,
-        headers = Headers(Header.Raw(CaseInsensitiveString(API_Key), apiKey))
+        headers = Headers(Header.Raw(CaseInsensitiveString(API_KEY), apiKey))
       )
 
       client_
@@ -56,7 +56,7 @@ object HttpClient {
         .run
         .unsafePerformSync match {
         case \/-(repo) => shutdown(); Right(repo)
-        case -\/(cf)   => shutdown(); Left(cf)
+        case -\/(cf)   =>  shutdown(); Left(cf)   //TODO log
       }
 
     }
@@ -73,13 +73,24 @@ object HttpClient {
   //TODO remove test
     def main(args: Array[String]): Unit = {
 
-      val repo = fetchRepoInfo("582dc1fe4a8a2e0011880682", "4346c61a3d0d476caeb25b412cad4e0c")
+      val repoId = "582dc1fe4a8a2e0011880682c"
+      val apiKey = "4346c61a3d0d476caeb25b412cad4e0c"
 
-      if (repo.isDefined)
-        println(s"\n url = ${repo.get.server.host}:${repo.get.server.port}" +
-                s"\n database = ${repo.get.database}")
-      else
-        println(">>See no need to pursue....TODO ")
+      fetchRepoInfo(repoId, apiKey) match {
+        case Some(repo) => attemptConnection(repo)
+        case _          => handleError(s"Could not retrieve repository with id '$repoId")
+      }
+
+
+      def attemptConnection(repo: Repository) = {
+        println(s"\n url = ${repo.server.host}:${repo.server.port}" +
+          s"\n database = ${repo.database}")
+
+      }
+
+      def handleError(msg: String): Unit = throw new RuntimeException(msg)
+
+
     }
 
 

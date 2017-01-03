@@ -18,6 +18,9 @@ object Introduction extends TourHelper {
 
     val sc = getSparkContext(args)
 
+    //get config values to fetch repo
+    val repoId = sc.getConf
+
     //REMOVE below
     val conf = sc.getConf.getAll
     println("Conf params >>>>>>>>>>>>>")
@@ -30,11 +33,16 @@ object Introduction extends TourHelper {
 
    // Saving data with a custom WriteConfig
   // import com.mongodb.spark.config._
-    val writeConfig = WriteConfig(Map("uri" -> "mongodb://localhost/", "database" -> "test", "collection" -> "spark", "writeConcern.w" -> "majority"), Some(WriteConfig(sc)))
-    MongoRepo.save(documents, writeConfig )
+    val writeConfig = WriteConfig(Map("spark.mongodb.output.uri" -> "mongodb://localhost/",
+                                      "database" -> "test",
+                                      "collection" -> "spark",
+                                      "writeConcern.w" -> "majority"),
+                                      Some(WriteConfig(sc)))
+
+    //MongoRepo.save(documents, writeConfig )
 
 
-    //MongoRepo.save(documents)
+    MongoRepo.save(documents)
 
 // Saving data with a custom WriteConfig
 /*import com.mongodb.spark.config._
